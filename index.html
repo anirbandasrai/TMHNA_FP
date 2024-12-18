@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+        :root {
+            --primary-color: #EB0A1E;
+            --secondary-color: #333333;
+            --accent-color: #EB0A1E;
+            --hover-color: #c00919;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        .logo-container {
+            padding: 2rem 0;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .navigation-grid {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .nav-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .nav-card:hover i {
+            color: white;
+        }
+
+        .nav-card h3 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #3e8142;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background-color: #3e8142;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background-color: #3e8142;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            margin-left: auto;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex-grow: 1;
+            padding: 8px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background-color: #3e8142;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            padding: 10px 15px;
+            background-color: #e9ecef;
+            border-radius: 15px 15px 15px 0;
+            margin-bottom: 15px;
+            display: none;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #6c757d;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Logo Section -->
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="TMHNA_Logo_RED.png" alt="Toyota Material Handling Logo">
+        </a>
+    </div>
+
+    <!-- Navigation Grid -->
+    <section class="navigation-grid">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='process.html'">
+                        <h3>Process</h3>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='people.html'">
+                        <h3>People</h3>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='technology.html'">
+                        <h3>Technology</h3>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='financials.html'">
+                        <h3>Financial</h3>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='dashboard.html'">
+                        <h3>Dashboard</h3>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="nav-card" onclick="window.location.href='nexas.html'">
+                        <h3>Nexas AI</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="chatbot-button" onclick="toggleChat()">
+        <i class="fas fa-robot chatbot-icon"></i>
+    </div>
+    
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Nexas AI Assistant</span>
+            </div>
+            <div class="chatbot-close" onclick="toggleChat()">×</div>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm Nexas AI, your Toyota Material Handling assistant. How can I help you today?
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your message..." id="userInput" onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+                    <h5>About Us</h5>
+                    <p>Empowering businesses through innovative solutions.</p>
+                </div>
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#">Home</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Support</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2024 Your Company Name. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function navigateTo(section) {
+            // Add animation to card click
+            const card = event.currentTarget;
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = 'translateY(-5px)';
+                // Here you would typically navigate to the respective section
+                console.log(`Navigating to ${section} section`);
+                // Example: window.location.href = `/${section}.html`;
+            }, 200);
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        let isChatOpen = false;
+
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            isChatOpen = !isChatOpen;
+            chatbot.style.display = isChatOpen ? 'flex' : 'none';
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'block';
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'none';
+        }
+
+        function addMessage(message, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.insertBefore(messageDiv, document.getElementById('typingIndicator'));
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                showTypingIndicator();
+
+                // Simulate bot response
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage('Thank you for your message. As a demo chatbot, I can acknowledge your input but cannot process real requests. In a live version, I would provide relevant assistance for Toyota Material Handling services.');
+                }, 1500);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }      
+    </script>
+</body>
+</html>

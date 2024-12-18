@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toyota Material Handling - People</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #EB0A1E;
+            --secondary-color: #333333;
+            --accent-color: #ff6b4a;
+            --hover-color: #c00919;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        .logo-container {
+            padding: 2rem 0;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin: 2rem 0;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            padding: 1rem;
+        }
+
+        .innovation-card {
+            background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .innovation-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .adkar-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .training-focus {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .focus-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .focus-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .process-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .governance-section {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #3e8142;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background-color: #3e8142;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background-color: #3e8142;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            margin-left: auto;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex-grow: 1;
+            padding: 8px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background-color: #3e8142;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            padding: 10px 15px;
+            background-color: #e9ecef;
+            border-radius: 15px 15px 15px 0;
+            margin-bottom: 15px;
+            display: none;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #6c757d;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Logo Section -->
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="TMHNA_Logo_RED.png" alt="Toyota Material Handling Logo">
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h1 class="section-title">People & Organization</h1>
+
+        <!-- Training Academy Section -->
+        <div class="card mb-5">
+            <div class="card-header">TMHNA Academy for Excellence</div>
+            <div class="card-body">
+                <div class="training-focus">
+                    <h3 class="mb-4">Focus Areas</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="focus-item">
+                                <div class="focus-icon"></div>
+                                <div>
+                                    <h5>SAP S/4HANA Integration</h5>
+                                    <p>End-to-end business processes, configuration, and customization</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="focus-item">
+                                <div class="focus-icon"></div>
+                                <div>
+                                    <h5>Integrated Planning</h5>
+                                    <p>Best practices for demand forecasting and inventory optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="focus-item">
+                                <div class="focus-icon"></div>
+                                <div>
+                                    <h5>Data Management</h5>
+                                    <p>Focus on data quality, governance, and advanced analytics</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="focus-item">
+                                <div class="focus-icon"></div>
+                                <div>
+                                    <h5>Security</h5>
+                                    <p>Cybersecurity fundamentals and incident response</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="mb-3">Training Delivery Methods</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="process-step">
+                            <h5>Online Modules</h5>
+                            <p>Interactive e-learning courses at your own pace</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="process-step">
+                            <h5>Instructor-led Sessions</h5>
+                            <p>Virtual and in-person classes with expert guidance</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="process-step">
+                            <h5>Hands-on Workshops</h5>
+                            <p>Practical application through simulations and case studies</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="process-step">
+                            <h5>Blended Learning</h5>
+                            <p>Comprehensive approach combining multiple methods</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Innovation Lab Section -->
+        <div class="card mb-5">
+            <div class="card-header">TMHNA Innovation Lab</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div class="innovation-card">
+                            <h5>AI/ML Solutions</h5>
+                            <p>Predictive models for demand forecasting and maintenance</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="innovation-card">
+                            <h5>IoT Integration</h5>
+                            <p>Sensor-based solutions for real-time monitoring</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="innovation-card">
+                            <h5>AR/VR Technologies</h5>
+                            <p>Immersive solutions for training and service</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="innovation-card">
+                            <h5>Robotics</h5>
+                            <p>Autonomous vehicles and material handling solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Management Framework -->
+        <div class="card mb-5">
+            <div class="card-header">ADKAR Change Management Framework</div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="adkar-step">
+                            <h5>Awareness</h5>
+                            <p>Building understanding of the need for change</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="adkar-step">
+                            <h5>Desire</h5>
+                            <p>Creating motivation to support the change</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="adkar-step">
+                            <h5>Knowledge</h5>
+                            <p>Providing information and training</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="adkar-step">
+                            <h5>Ability</h5>
+                            <p>Developing skills and behaviors</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="adkar-step">
+                            <h5>Reinforcement</h5>
+                            <p>Sustaining the change</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IT Operating Model -->
+        <div class="card mb-5">
+            <div class="card-header">IT Operating Model & Governance</div>
+            <div class="card-body">
+                <div class="governance-section">
+                    <h4 class="mb-4">Key Roles</h4>
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="process-step">
+                                <h5>Product Managers</h5>
+                                <p>Define and prioritize IT product roadmap</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="process-step">
+                                <h5>Scrum Masters</h5>
+                                <p>Facilitate agile development processes</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="process-step">
+                                <h5>Data Scientists</h5>
+                                <p>Apply advanced analytics and ML techniques</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="process-step">
+                                <h5>Career Development</h5>
+                                <p>Clear job descriptions and career paths</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Program Details -->
+    <div class="container mb-5">
+        <h2 class="section-title">Training & Development Programs</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Training Focus Areas</div>
+                    <div class="card-body">
+                        <div class="focus-item">
+                            <h5>SAP S/4HANA</h5>
+                            <p>Cover end-to-end business processes, configuration, and customization</p>
+                        </div>
+                        <div class="focus-item">
+                            <h5>Integrated Planning</h5>
+                            <p>Teach best practices for demand forecasting, inventory optimization, and scenario planning</p>
+                        </div>
+                        <div class="focus-item">
+                            <h5>Data Management</h5>
+                            <p>Focus on data quality, governance, and advanced analytics techniques</p>
+                        </div>
+                        <div class="focus-item">
+                            <h5>Security</h5>
+                            <p>Cover cybersecurity fundamentals, threat detection, and incident response</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Training Delivery Methods</div>
+                    <div class="card-body">
+                        <div class="process-step mb-3">
+                            <h5>Online Modules</h5>
+                            <p>Interactive e-learning courses that employees can complete at their own pace</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Instructor-led Sessions</h5>
+                            <p>Virtual and in-person classes led by subject matter experts</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Hands-on Workshops</h5>
+                            <p>Practical opportunities through simulations, case studies, and projects</p>
+                        </div>
+                        <div class="process-step">
+                            <h5>Blended Learning</h5>
+                            <p>Combined approach with online modules, instructor-led sessions, and workshops</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Innovation Lab Section -->
+    <div class="container mb-5">
+        <h2 class="section-title">TMHNA Innovation Lab</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">Focus Areas & Technologies</div>
+                    <div class="card-body">
+                        <div class="innovation-card mb-3">
+                            <h5>AI/ML Solutions</h5>
+                            <p>Predictive models for demand forecasting, quality control, and maintenance</p>
+                        </div>
+                        <div class="innovation-card mb-3">
+                            <h5>IoT Integration</h5>
+                            <p>Sensor-based solutions for equipment and process monitoring</p>
+                        </div>
+                        <div class="innovation-card mb-3">
+                            <h5>AR/VR Technologies</h5>
+                            <p>Immersive solutions for remote collaboration and training</p>
+                        </div>
+                        <div class="innovation-card">
+                            <h5>Robotics</h5>
+                            <p>Autonomous vehicles and robots for material handling</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">Success Stories & Governance</div>
+                    <div class="card-body">
+                        <div class="process-step mb-3">
+                            <h5>Documentation</h5>
+                            <p>Showcase successful pilots and proofs-of-concept</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Knowledge Sharing</h5>
+                            <p>Share lessons learned through internal communications and events</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Recognition Program</h5>
+                            <p>Reward teams and individuals contributing to innovation</p>
+                        </div>
+                        <div class="process-step">
+                            <h5>Continuous Improvement</h5>
+                            <p>Foster a culture of learning and innovation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operating Model Section -->
+    <div class="container mb-5">
+        <h2 class="section-title">IT Operating Model</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">Key Roles & Responsibilities</div>
+                    <div class="card-body">
+                        <div class="process-step mb-3">
+                            <h5>Product Managers</h5>
+                            <p>Define and prioritize IT product roadmap and backlog</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Scrum Masters</h5>
+                            <p>Facilitate agile development processes and remove obstacles</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Data Scientists</h5>
+                            <p>Apply advanced analytics and machine learning techniques</p>
+                        </div>
+                        <div class="process-step">
+                            <h5>Career Development</h5>
+                            <p>Clear job descriptions and career advancement paths</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">Governance Structure</div>
+                    <div class="card-body">
+                        <div class="process-step mb-3">
+                            <h5>Decision Making</h5>
+                            <p>Clear processes for IT investments and standards</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Roles Definition</h5>
+                            <p>Defined responsibilities for IT governance bodies</p>
+                        </div>
+                        <div class="process-step mb-3">
+                            <h5>Review Process</h5>
+                            <p>Regular checkpoints throughout IT lifecycle</p>
+                        </div>
+                        <div class="process-step">
+                            <h5>Culture</h5>
+                            <p>Foster transparency, collaboration, and accountability</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Management Framework -->
+    <div class="container mb-5">
+        <h2 class="section-title">Change Management Framework</h2>
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">ADKAR Model Implementation</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="adkar-step">
+                                    <h5>Awareness</h5>
+                                    <p>Build understanding of change need</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="adkar-step">
+                                    <h5>Desire</h5>
+                                    <p>Create motivation for change</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="adkar-step">
+                                    <h5>Knowledge</h5>
+                                    <p>Provide necessary training</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="adkar-step">
+                                    <h5>Ability</h5>
+                                    <p>Develop required skills</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="adkar-step">
+                                    <h5>Reinforcement</h5>
+                                    <p>Sustain the changes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatbot-button" onclick="toggleChat()">
+        <i class="fas fa-robot chatbot-icon"></i>
+    </div>
+    
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Nexas AI Assistant</span>
+            </div>
+            <div class="chatbot-close" onclick="toggleChat()">×</div>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm Nexas AI, your Toyota Material Handling assistant. How can I help you today?
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your message..." id="userInput" onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+                    <h5>About Toyota Material Handling</h5>
+                    <p>Leading the way in material handling excellence and innovation.</p>
+                </div>
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="/" class="text-white text-decoration-none mx-2">Home</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Contact</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Support</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@toyotamh.com<br>Phone: 1-800-000-0000</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let isChatOpen = false;
+
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            isChatOpen = !isChatOpen;
+            chatbot.style.display = isChatOpen ? 'flex' : 'none';
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'block';
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'none';
+        }
+
+        function addMessage(message, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.insertBefore(messageDiv, document.getElementById('typingIndicator'));
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                showTypingIndicator();
+
+                // Simulate bot response
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage('Thank you for your message. As a demo chatbot, I can acknowledge your input but cannot process real requests. In a live version, I would provide relevant assistance for Toyota Material Handling services.');
+                }, 1500);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

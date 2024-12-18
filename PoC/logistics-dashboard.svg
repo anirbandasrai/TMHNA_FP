@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+    <!-- Background -->
+    <rect width="1200" height="800" fill="#f0f2f5"/>
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="1200" height="60" fill="#2b579a"/>
+    <text x="30" y="38" fill="white" font-family="Arial" font-size="24" font-weight="bold">Logistics Optimization Dashboard</text>
+    <text x="30" y="55" fill="#8ba3cc" font-family="Arial" font-size="12">Route Performance | Cost Analytics | Delivery Optimization</text>
+    
+    <!-- Key Metrics -->
+    <g transform="translate(20, 80)">
+        <!-- On-Time Delivery -->
+        <rect x="0" y="0" width="280" height="120" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="20" y="30" font-family="Arial" font-size="14" fill="#666">On-Time Delivery</text>
+        <text x="20" y="70" font-family="Arial" font-size="32" font-weight="bold" fill="#4CAF50">96.8%</text>
+        <path d="M20 85 L260 85" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="20" y="105" font-family="Arial" font-size="12" fill="#4CAF50">↑ 3.2% vs target</text>
+
+        <!-- Active Shipments -->
+        <rect x="300" y="0" width="280" height="120" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="320" y="30" font-family="Arial" font-size="14" fill="#666">Active Shipments</text>
+        <text x="320" y="70" font-family="Arial" font-size="32" font-weight="bold" fill="#2b579a">234</text>
+        <path d="M320 85 L560 85" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="320" y="105" font-family="Arial" font-size="12" fill="#4CAF50">All in transit</text>
+
+        <!-- Average Lead Time -->
+        <rect x="600" y="0" width="280" height="120" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="620" y="30" font-family="Arial" font-size="14" fill="#666">Avg Lead Time</text>
+        <text x="620" y="70" font-family="Arial" font-size="32" font-weight="bold" fill="#2b579a">2.4d</text>
+        <path d="M620 85 L860 85" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="620" y="105" font-family="Arial" font-size="12" fill="#4CAF50">↓ 12% with optimization</text>
+
+        <!-- Cost per Mile -->
+        <rect x="900" y="0" width="280" height="120" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="920" y="30" font-family="Arial" font-size="14" fill="#666">Cost per Mile</text>
+        <text x="920" y="70" font-family="Arial" font-size="32" font-weight="bold" fill="#2b579a">$1.84</text>
+        <path d="M920 85 L1160 85" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="920" y="105" font-family="Arial" font-size="12" fill="#4CAF50">↓ 8% vs baseline</text>
+    </g>
+
+    <!-- Main Content Section -->
+    <g transform="translate(20, 220)">
+        <!-- Route Optimization Map -->
+        <rect x="0" y="0" width="780" height="250" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="20" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Route Optimization Map</text>
+        <!-- Map Background -->
+        <rect x="40" y="50" width="720" height="180" fill="#f8f9fa" stroke="#e0e0e0"/>
+        <!-- Optimized Routes -->
+        <path d="M100 150 C300 120, 400 180, 600 130" 
+              fill="none" stroke="#4CAF50" stroke-width="2"/>
+        <path d="M150 200 C350 170, 450 220, 650 180" 
+              fill="none" stroke="#2b579a" stroke-width="2"/>
+        <!-- Distribution Points -->
+        <circle cx="100" cy="150" r="5" fill="#2b579a"/>
+        <circle cx="600" cy="130" r="5" fill="#2b579a"/>
+        <circle cx="150" cy="200" r="5" fill="#4CAF50"/>
+        <circle cx="650" cy="180" r="5" fill="#4CAF50"/>
+        <!-- Legend -->
+        <rect x="40" y="220" width="10" height="2" fill="#2b579a"/>
+        <text x="55" y="224" font-family="Arial" font-size="10" fill="#666">Primary Route</text>
+        <rect x="150" y="220" width="10" height="2" fill="#4CAF50"/>
+        <text x="165" y="224" font-family="Arial" font-size="10" fill="#666">Alternative Route</text>
+
+        <!-- Delivery Performance -->
+        <rect x="800" y="0" width="380" height="250" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="820" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Delivery Performance</text>
+        <!-- Performance Metrics -->
+        <g transform="translate(820, 50)">
+            <!-- Early -->
+            <text x="0" y="20" font-family="Arial" font-size="14">Early Deliveries</text>
+            <rect x="0" y="30" width="340" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="30" width="102" height="20" rx="10" fill="#4CAF50"/>
+            <text x="350" y="45" font-family="Arial" font-size="12">30%</text>
+            
+            <!-- On-Time -->
+            <text x="0" y="80" font-family="Arial" font-size="14">On-Time Deliveries</text>
+            <rect x="0" y="90" width="340" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="90" width="226" height="20" rx="10" fill="#2b579a"/>
+            <text x="350" y="105" font-family="Arial" font-size="12">66.8%</text>
+            
+            <!-- Delayed -->
+            <text x="0" y="140" font-family="Arial" font-size="14">Delayed Deliveries</text>
+            <rect x="0" y="150" width="340" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="150" width="11" height="20" rx="10" fill="#FFA500"/>
+            <text x="350" y="165" font-family="Arial" font-size="12">3.2%</text>
+        </g>
+    </g>
+
+    <!-- Bottom Section -->
+    <g transform="translate(20, 490)">
+        <!-- Cost Analysis -->
+        <rect x="0" y="0" width="580" height="290" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="20" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Cost Optimization Analysis</text>
+        <!-- Cost Breakdown -->
+        <g transform="translate(40, 50)">
+            <!-- Fuel Costs -->
+            <text x="0" y="20" font-family="Arial" font-size="14">Fuel Costs</text>
+            <rect x="0" y="30" width="500" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="30" width="175" height="20" rx="10" fill="#2b579a"/>
+            <text x="510" y="45" font-family="Arial" font-size="12">35%</text>
+            
+            <!-- Labor -->
+            <text x="0" y="80" font-family="Arial" font-size="14">Labor</text>
+            <rect x="0" y="90" width="500" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="90" width="200" height="20" rx="10" fill="#4CAF50"/>
+            <text x="510" y="105" font-family="Arial" font-size="12">40%</text>
+            
+            <!-- Maintenance -->
+            <text x="0" y="140" font-family="Arial" font-size="14">Maintenance</text>
+            <rect x="0" y="150" width="500" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="150" width="125" height="20" rx="10" fill="#FFC107"/>
+            <text x="510" y="165" font-family="Arial" font-size="12">25%</text>
+        </g>
+
+        <!-- Efficiency Metrics -->
+        <rect x="600" y="0" width="580" height="290" rx="4" fill="white" stroke="#e0e0e0"/>
+        <text x="620" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Route Efficiency Metrics</text>
+        <!-- Efficiency Analytics -->
+        <g transform="translate(620, 50)">
+            <!-- Miles per Gallon -->
+            <text x="0" y="20" font-family="Arial" font-size="14">Fleet MPG</text>
+            <rect x="0" y="30" width="520" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="30" width="442" height="20" rx="10" fill="#4CAF50"/>
+            <text x="530" y="45" font-family="Arial" font-size="12">85%</text>
+            
+            <!-- Route Optimization -->
+            <text x="0" y="80" font-family="Arial" font-size="14">Route Optimization</text>
+            <rect x="0" y="90" width="520" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="90" width="468" height="20" rx="10" fill="#2b579a"/>
+            <text x="530" y="105" font-family="Arial" font-size="12">90%</text>
+            
+            <!-- Load Optimization -->
+            <text x="0" y="140" font-family="Arial" font-size="14">Load Optimization</text>
+            <rect x="0" y="150" width="520" height="20" rx="10" fill="#e0e0e0"/>
+            <rect x="0" y="150" width="494" height="20" rx="10" fill="#4CAF50"/>
+            <text x="530" y="165" font-family="Arial" font-size="12">95%</text>
+        </g>
+    </g>
+</svg>

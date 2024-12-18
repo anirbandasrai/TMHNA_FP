@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250">
+    <!-- Background -->
+    <rect width="400" height="250" fill="#f8fafc"/>
+    
+    <!-- Title -->
+    <text x="20" y="25" font-family="Arial" font-size="12" font-weight="bold" fill="#1e293b">Operating Margin Analysis</text>
+    
+    <!-- Main Chart -->
+    <rect x="20" y="35" width="240" height="140" fill="white" stroke="#e2e8f0" stroke-width="1" rx="3"/>
+    
+    <!-- Chart Grid -->
+    <g transform="translate(30,45)">
+        <!-- Grid Lines -->
+        <line x1="0" y1="0" x2="220" y2="0" stroke="#e2e8f0" stroke-width="0.5"/>
+        <line x1="0" y1="30" x2="220" y2="30" stroke="#e2e8f0" stroke-width="0.5"/>
+        <line x1="0" y1="60" x2="220" y2="60" stroke="#e2e8f0" stroke-width="0.5"/>
+        <line x1="0" y1="90" x2="220" y2="90" stroke="#e2e8f0" stroke-width="0.5"/>
+        <line x1="0" y1="120" x2="220" y2="120" stroke="#e2e8f0" stroke-width="0.5"/>
+
+        <!-- Area Charts -->
+        <!-- TMH Area -->
+        <path d="M0,100 L55,80 L110,60 L165,40 L220,30 L220,120 L0,120 Z" fill="#3b82f6" fill-opacity="0.1"/>
+        <!-- Raymond Area -->
+        <path d="M0,120 L55,100 L110,90 L165,70 L220,65 L220,120 L0,120 Z" fill="#10b981" fill-opacity="0.1"/>
+        <!-- TMH Heavy Duty Area -->
+        <path d="M0,110 L55,85 L110,75 L165,55 L220,45 L220,120 L0,120 Z" fill="#f59e0b" fill-opacity="0.1"/>
+
+        <!-- Lines -->
+        <path d="M0,100 L55,80 L110,60 L165,40 L220,30" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <path d="M0,120 L55,100 L110,90 L165,70 L220,65" fill="none" stroke="#10b981" stroke-width="1.5"/>
+        <path d="M0,110 L55,85 L110,75 L165,55 L220,45" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+
+        <!-- Data Points with Values -->
+        <!-- TMH -->
+        <g fill="#3b82f6">
+            <circle cx="0" cy="100" r="2"/>
+            <text x="0" y="95" text-anchor="middle" font-size="6">14.2%</text>
+            <circle cx="55" cy="80" r="2"/>
+            <text x="55" y="75" text-anchor="middle" font-size="6">15.8%</text>
+            <circle cx="110" cy="60" r="2"/>
+            <text x="110" y="55" text-anchor="middle" font-size="6">17.2%</text>
+            <circle cx="165" cy="40" r="2"/>
+            <text x="165" y="35" text-anchor="middle" font-size="6">18.9%</text>
+            <circle cx="220" cy="30" r="2"/>
+            <text x="220" y="25" text-anchor="middle" font-size="6">19.5%</text>
+        </g>
+
+        <!-- Raymond -->
+        <g fill="#10b981">
+            <circle cx="0" cy="120" r="2"/>
+            <circle cx="55" cy="100" r="2"/>
+            <circle cx="110" cy="90" r="2"/>
+            <circle cx="165" cy="70" r="2"/>
+            <circle cx="220" cy="65" r="2"/>
+        </g>
+
+        <!-- TMH Heavy Duty -->
+        <g fill="#f59e0b">
+            <circle cx="0" cy="110" r="2"/>
+            <circle cx="55" cy="85" r="2"/>
+            <circle cx="110" cy="75" r="2"/>
+            <circle cx="165" cy="55" r="2"/>
+            <circle cx="220" cy="45" r="2"/>
+        </g>
+
+        <!-- X-Axis Labels -->
+        <text x="0" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#64748b">Q1</text>
+        <text x="55" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#64748b">Q2</text>
+        <text x="110" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#64748b">Q3</text>
+        <text x="165" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#64748b">Q4</text>
+        <text x="220" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#64748b">Q1'24</text>
+
+        <!-- Y-Axis Labels -->
+        <text x="-5" y="120" text-anchor="end" font-family="Arial" font-size="8" fill="#64748b">10%</text>
+        <text x="-5" y="90" text-anchor="end" font-family="Arial" font-size="8" fill="#64748b">15%</text>
+        <text x="-5" y="60" text-anchor="end" font-family="Arial" font-size="8" fill="#64748b">20%</text>
+        <text x="-5" y="30" text-anchor="end" font-family="Arial" font-size="8" fill="#64748b">25%</text>
+        <text x="-5" y="0" text-anchor="end" font-family="Arial" font-size="8" fill="#64748b">30%</text>
+    </g>
+
+    <!-- Legend -->
+    <g transform="translate(30,185)">
+        <circle cx="0" cy="0" r="2" fill="#3b82f6"/>
+        <text x="8" y="3" font-family="Arial" font-size="8" fill="#334155">TMH</text>
+        <circle cx="40" cy="0" r="2" fill="#10b981"/>
+        <text x="48" y="3" font-family="Arial" font-size="8" fill="#334155">Raymond</text>
+        <circle cx="90" cy="0" r="2" fill="#f59e0b"/>
+        <text x="98" y="3" font-family="Arial" font-size="8" fill="#334155">TMH Heavy Duty</text>
+    </g>
+
+    <!-- Metrics Panel -->
+    <g transform="translate(270,35)">
+        <!-- TMH Card -->
+        <rect width="120" height="40" fill="white" stroke="#e2e8f0" stroke-width="1" rx="3"/>
+        <text x="10" y="15" font-family="Arial" font-size="8" font-weight="bold" fill="#3b82f6">TMH</text>
+        <text x="10" y="30" font-family="Arial" font-size="10" font-weight="bold" fill="#334155">19.5%</text>
+        <text x="60" y="30" font-family="Arial" font-size="8" fill="#10b981">+2.3%</text>
+
+        <!-- Raymond Card -->
+        <rect y="45" width="120" height="40" fill="white" stroke="#e2e8f0" stroke-width="1" rx="3"/>
+        <text x="10" y="60" font-family="Arial" font-size="8" font-weight="bold" fill="#10b981">Raymond</text>
+        <text x="10" y="75" font-family="Arial" font-size="10" font-weight="bold" fill="#334155">16.8%</text>
+        <text x="60" y="75" font-family="Arial" font-size="8" fill="#10b981">+1.8%</text>
+
+        <!-- TMH Heavy Duty Card -->
+        <rect y="90" width="120" height="40" fill="white" stroke="#e2e8f0" stroke-width="1" rx="3"/>
+        <text x="10" y="105" font-family="Arial" font-size="8" font-weight="bold" fill="#f59e0b">TMH Heavy Duty</text>
+        <text x="10" y="120" font-family="Arial" font-size="10" font-weight="bold" fill="#334155">18.2%</text>
+        <text x="60" y="120" font-family="Arial" font-size="8" fill="#10b981">+2.0%</text>
+
+        <!-- Industry Comparison -->
+        <rect y="135" width="120" height="40" fill="white" stroke="#e2e8f0" stroke-width="1" rx="3"/>
+        <text x="10" y="150" font-family="Arial" font-size="8" font-weight="bold" fill="#334155">vs. Industry Avg</text>
+        <text x="10" y="165" font-family="Arial" font-size="8" fill="#64748b">+4.2% | +1.5% | +2.9%</text>
+    </g>
+</svg>

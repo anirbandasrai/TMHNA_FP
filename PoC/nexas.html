@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexas AI - Toyota Material Handling</title>
+    <!-- Required CDN Links -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #EB0A1E;
+            --secondary-color: #333333;
+            --accent-color: #ff6b4a;
+            --hover-color: #c00919;
+            --light-gray: #f8f9fa;
+            --success-green: #28a745;
+            --warning-yellow: #ffc107;
+            --danger-red: #dc3545;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light-gray);
+        }
+
+        .logo-container {
+            padding: 2rem 0;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤖</text></svg>') center/50% repeat;
+            opacity: 0.1;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .demo-screen {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        height: 600px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+        }
+
+        .demo-header {
+            background: #EB0A1E;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .demo-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #59ec7b;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ticket-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #EB0A1E;
+            transition: transform 0.3s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateX(10px);
+        }
+
+        .progress {
+            height: 6px;
+            margin-top: 10px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .inventory-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .inventory-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tracking-step {
+            padding: 1rem;
+            border-left: 2px solid #dee2e6;
+            margin-left: 1rem;
+            position: relative;
+        }
+
+        .tracking-step::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #dee2e6;
+            border-radius: 50%;
+            position: absolute;
+            left: -7px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tracking-step.active {
+            border-left-color: #EB0A1E;
+        }
+
+        .tracking-step.active::before {
+            background: #EB0A1E;
+        }
+
+        .chart-container {
+            height: 200px;
+            margin-top: 1.5rem;
+        }
+
+        .message-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background: #f8f9fa;
+            margin-right: auto;
+            border-radius: 15px 15px 15px 0;
+        }
+
+        .user-message {
+            background: #EB0A1E;
+            color: white;
+            margin-left: auto;
+            border-radius: 15px 15px 0 15px;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #6c757d;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        @keyframes typingBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .ticket-list {
+            margin-top: 1rem;
+        }
+
+        .ticket-item {
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .inventory-item {
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .inventory-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tracking-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            height: 100%;
+            width: 2px;
+            background: #dee2e6;
+        }
+
+        .tracking-step {
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 20px;
+        }
+
+        .tracking-step i {
+            position: absolute;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .tracking-step.completed i {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .tracking-step.active i {
+            background: var(--primary-color);
+            color: white;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        .integration-diagram {
+            position: relative;
+            height: 400px;
+            margin: 3rem 0;
+        }
+
+        .security-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 0;
+            }
+
+            .demo-screen {
+                height: 400px;
+            }
+
+            .inventory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        .demo-screen {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow:hidden;
+        }
+
+        .demo-header {
+            background-color: #3e8142;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .demo-content {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+            line-height: 1.4;
+            font-size: 16px;
+        }
+
+        .chatbot-message {
+            background-color: #e9ecef;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-active {
+            background-color: #5df07f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Container -->
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="TMHNA_Logo_RED.png" alt="Toyota Material Handling Logo">
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 mb-4">Meet Nexas AI</h1>
+                    <p class="lead mb-4">Your intelligent assistant for Toyota Material Handling operations, powered by advanced AI and deep industry knowledge.</p>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-light btn-lg">See Demos</button>
+                        <button class="btn btn-outline-light btn-lg">Learn More</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="demo-screen">
+                        <div class="demo-header">
+                            <div>
+                                <i class="fas fa-robot me-2"></i>
+                                Nexas AI Assistant
+                            </div>
+                            <div class="demo-status">
+                                <span class="status-indicator status-active"></span>
+                                Online
+                            </div>
+                        </div>
+                        <div class="demo-content" id="heroDemo">
+                            <div id="chatbotMessages"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Intelligent Solutions for Every Role</h2>
+            <div class="row">
+                <!-- Employee Features -->
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-user-tie fa-3x text-primary"></i>
+                        </div>
+                        <h3>For Employees</h3>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Automated ticket management
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Instant access to resources
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Process automation
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dealer Features -->
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-store fa-3x text-primary"></i>
+                        </div>
+                        <h3>For Dealers</h3>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Real-time inventory tracking
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Sales analytics dashboard
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Automated order management
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Customer Features -->
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-users fa-3x text-primary"></i>
+                        </div>
+                        <h3>For Customers</h3>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Order tracking & updates
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                24/7 support access
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Automated cost management
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">See Nexas AI in Action</h2>
+            <div class="row">
+                <!-- Employee Portal Demo -->
+                <div class="col-md-4">
+                    <div class="demo-screen">
+                        <div class="demo-header">
+                            <div>
+                                <i class="fas fa-user-tie me-2"></i>
+                                Employee Portal
+                            </div>
+                            <div>
+                                <span class="status-indicator"></span>
+                                Live
+                            </div>
+                        </div>
+                        <div class="demo-content" id="employeeDemo">
+                            <div class="chat-interface">
+                                <div class="message-bubble bot-message">
+                                    Welcome back! How can I assist you today?
+                                </div>
+                                <div class="message-bubble user-message">
+                                    I need to create a support ticket for SAP integration.
+                                </div>
+                                <div class="typing-indicator">
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                </div>
+                            </div>
+                            <div class="active-tickets mt-4">
+                                <h6 class="mb-3">Active Tickets</h6>
+                                <div class="ticket-item">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>#TKT-2024-001</strong>
+                                        <span class="badge bg-warning">In Progress</span>
+                                    </div>
+                                    <p class="mb-2 mt-2">SAP Integration Issue</p>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" id="ticket1Progress" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div class="ticket-item">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>#TKT-2024-002</strong>
+                                        <span class="badge bg-success">Resolved</span>
+                                    </div>
+                                    <p class="mb-2 mt-2">System Access Request</p>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="ticketMetricsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Dealer Portal Demo -->
+                <div class="col-md-4">
+                    <div class="demo-screen">
+                        <div class="demo-header">
+                            <div>
+                                <i class="fas fa-store me-2"></i>
+                                Dealer Portal
+                            </div>
+                            <div>
+                                <span class="status-indicator"></span>
+                                Real-time Updates
+                            </div>
+                        </div>
+                        <div class="demo-content" id="dealerDemo">
+                            <div class="inventory-overview">
+                                <h6 class="mb-3">Live Inventory Status</h6>
+                                <div class="inventory-grid" id="inventoryGrid">
+                                    <div class="inventory-item">
+                                        <img src="Flux1.AI-2024-12-18 (1).png" alt="Forklift A" style="width: 80px; height: 80px;">
+                                        <div class="mt-2">Model TX-150</div>
+                                        <strong class="text-success" id="stock1">In Stock: 12</strong>
+                                    </div>
+                                    <div class="inventory-item">
+                                        <img src="Flux1.AI-2024-12-18 (2).png" alt="Forklift B" style="width: 80px; height: 80px;">
+                                        <div class="mt-2">Model RX-200</div>
+                                        <strong class="text-warning" id="stock2">Low Stock: 3</strong>
+                                    </div>
+                                    <div class="inventory-item">
+                                        <img src="Flux1.AI-2024-12-18.png" alt="Forklift C" style="width: 80px; height: 80px;">
+                                        <div class="mt-2">Model EX-300</div>
+                                        <strong class="text-danger" id="stock3">Out of Stock</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="salesMetricsChart"></canvas>
+                            </div>
+                            <div id="salesNotifications" class="mt-3">
+                                <!-- Dynamic notifications will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Customer Portal Demo -->
+                <div class="col-md-4">
+                    <div class="demo-screen">
+                        <div class="demo-header">
+                            <div>
+                                <i class="fas fa-users me-2"></i>
+                                Customer Portal
+                            </div>
+                            <div>
+                                <span class="status-indicator"></span>
+                                Active
+                            </div>
+                        </div>
+                        <div class="demo-content" id="customerDemo">
+                            <div class="order-tracking">
+                                <h6 class="mb-3">Order Tracking</h6>
+                                <div class="tracking-steps">
+                                    <div class="tracking-step active">
+                                        <strong>Order Placed</strong>
+                                        <p class="mb-0 small">Dec 18, 2024 - 9:30 AM</p>
+                                    </div>
+                                    <div class="tracking-step active">
+                                        <strong>Processing</strong>
+                                        <p class="mb-0 small">Dec 18, 2024 - 10:15 AM</p>
+                                    </div>
+                                    <div class="tracking-step active">
+                                        <strong>In Transit</strong>
+                                        <p class="mb-0 small">Dec 18, 2024 - 2:45 PM</p>
+                                    </div>
+                                    <div class="tracking-step">
+                                        <strong>Delivered</strong>
+                                        <p class="mb-0 small">Estimated: Dec 19, 2024</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="customerMetricsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Security & Integration Section -->
+    <section class="security-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Enterprise-Grade Security</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="feature-card bg-white text-dark">
+                        <h4 class="mb-4">Identity & Access Management</h4>
+                        <div class="chart-container">
+                            <canvas id="iamMetrics"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-card bg-white text-dark">
+                        <h4 class="mb-4">Data Protection</h4>
+                        <div class="chart-container">
+                            <canvas id="securityMetrics"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start">
+                    <h5>About Toyota Material Handling</h5>
+                    <p>Leading the way in material handling excellence and innovation.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="/" class="text-white text-decoration-none mx-2">Home</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Contact</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Support</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@toyotamh.com<br>Phone: 1-800-000-0000</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+        <!-- JavaScript Section -->
+        <script>
+            // Initialize all charts and demos when the page loads
+            // Initialize demo functionality
+            const chatbotMessages = document.getElementById('chatbotMessages');
+
+            const messages = [
+                { text: 'Hello! I\'m Nexas AI, your intelligent assistant.', delay: 1000 },
+                { text: 'How can I help you with your Toyota Material Handling operations today?', delay: 2000 },
+                { text: 'I\'m here to answer your questions and provide guidance.', delay: 3000 },
+            ];
+
+            function createMessageElement(text, isUser = false) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                if (isUser) {
+                    messageElement.classList.add('user-message');
+                } else {
+                    messageElement.classList.add('chatbot-message');
+                }
+                messageElement.textContent = text;
+                return messageElement;
+            }
+
+            function animateMessages() {
+                messages.forEach((message, index) => {
+                    setTimeout(() => {
+                        const messageElement = createMessageElement(message.text);
+                        chatbotMessages.appendChild(messageElement);
+                        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                    }, message.delay);
+                });
+            }
+
+            animateMessages();
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeCharts();
+                startLiveUpdates();
+            });
+
+            function initializeCharts() {
+                // Ticket Metrics Chart
+                const ticketCtx = document.getElementById('ticketMetricsChart').getContext('2d');
+                const ticketChart = new Chart(ticketCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                        datasets: [{
+                            label: 'Tickets Resolved',
+                            data: [5, 8, 6, 9, 7],
+                            borderColor: '#EB0A1E',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+
+                // Sales Metrics Chart
+                const salesCtx = document.getElementById('salesMetricsChart').getContext('2d');
+                const salesChart = new Chart(salesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                        datasets: [{
+                            label: 'Monthly Sales',
+                            data: [65, 72, 78, 85, 82],
+                            backgroundColor: '#EB0A1E'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+
+                // Customer Metrics Chart
+                const customerCtx = document.getElementById('customerMetricsChart').getContext('2d');
+                const customerChart = new Chart(customerCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Satisfied', 'Neutral', 'Needs Attention'],
+                        datasets: [{
+                            data: [75, 15, 10],
+                            backgroundColor: ['#28a745', '#ffc107', '#EB0A1E']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+
+                // Update charts periodically
+                setInterval(() => {
+                    updateCharts([ticketChart, salesChart, customerChart]);
+                }, 3000);
+            }
+
+            function updateCharts(charts) {
+                charts.forEach(chart => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data = dataset.data.map(value => {
+                            return Math.max(0, value + (Math.random() - 0.5) * 5);
+                        });
+                    });
+                    chart.update('none');
+                });
+            }
+
+            function startLiveUpdates() {
+                // Update ticket progress
+                setInterval(() => {
+                    const progress = document.getElementById('ticket1Progress');
+                    let width = parseInt(progress.style.width) || 60;
+                    width = Math.min(100, width + Math.random() * 5);
+                    progress.style.width = width + '%';
+                }, 2000);
+
+                // Update inventory levels
+                setInterval(() => {
+                    const stocks = ['stock1', 'stock2', 'stock3'];
+                    stocks.forEach(id => {
+                        const element = document.getElementById(id);
+                        const stock = Math.floor(Math.random() * 20);
+                        if (stock === 0) {
+                            element.className = 'text-danger';
+                            element.textContent = 'Out of Stock';
+                        } else if (stock <= 5) {
+                            element.className = 'text-warning';
+                            element.textContent = `Low Stock: ${stock}`;
+                        } else {
+                            element.className = 'text-success';
+                            element.textContent = `In Stock: ${stock}`;
+                        }
+                    });
+                }, 4000);
+
+                // Update tracking steps
+                setInterval(() => {
+                    const steps = document.querySelectorAll('.tracking-step');
+                    let activeIndex = Array.from(steps).findIndex(step => step.classList.contains('active'));
+                    if (activeIndex === steps.length - 1) {
+                        steps.forEach(step => step.classList.remove('active'));
+                        steps[0].classList.add('active');
+                    } else {
+                        steps[activeIndex].classList.remove('active');
+                        steps[activeIndex + 1].classList.add('active');
+                    }
+                }, 5000);
+
+                // Add dynamic notifications
+                const notifications = [
+                    'New order received: #ORD-2024-789',
+                    'Inventory alert: Model TX-150 running low',
+                    'Sales target achieved for Q4',
+                    'New delivery scheduled for tomorrow'
+                ];
+                let notificationIndex = 0;
+
+                function addNotification() {
+                    const container = document.getElementById('salesNotifications');
+                    const notification = document.createElement('div');
+                    notification.className = 'alert alert-info alert-dismissible fade show';
+                    notification.innerHTML = `
+                        ${notifications[notificationIndex]}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    container.prepend(notification);
+                    notificationIndex = (notificationIndex + 1) % notifications.length;
+
+                    // Remove notification after 5 seconds
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 5000);
+                }
+
+                setInterval(addNotification, 7000);
+
+                // Simulate chat messages
+                const employeeMessages = [
+                    { type: 'bot', text: 'I can help you create a support ticket. What\'s the issue?' },
+                    { type: 'user', text: 'SAP integration is not working properly' },
+                    { type: 'bot', text: 'I understand. I\'ll create a high-priority ticket for the SAP integration issue. Can you provide more details?' }
+                ];
+                let messageIndex = 0;
+
+                function addChatMessage() {
+                    const chatInterface = document.querySelector('.chat-interface');
+                    const message = employeeMessages[messageIndex];
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message-bubble ${message.type}-message`;
+                    messageDiv.textContent = message.text;
+                    
+                    // Remove typing indicator if exists
+                    const typingIndicator = document.querySelector('.typing-indicator');
+                    if (typingIndicator) typingIndicator.remove();
+
+                    chatInterface.appendChild(messageDiv);
+                    chatInterface.scrollTop = chatInterface.scrollHeight;
+
+                    if (message.type === 'user' && messageIndex < employeeMessages.length - 1) {
+                        // Add typing indicator for bot response
+                        const typing = document.createElement('div');
+                        typing.className = 'typing-indicator';
+                        typing.innerHTML = `
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        `;
+                        chatInterface.appendChild(typing);
+                    }
+
+                    messageIndex = (messageIndex + 1) % employeeMessages.length;
+                }
+
+                setInterval(addChatMessage, 4000);
+
+                // Update progress animations
+                function animateElements() {
+                    document.querySelectorAll('.fade-in').forEach(element => {
+                        const rect = element.getBoundingClientRect();
+                        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+                        if (isVisible) {
+                            element.classList.add('visible');
+                        }
+                    });
+                }
+
+                window.addEventListener('scroll', animateElements);
+                animateElements();
+            }
+
+            // Initial setup
+            startLiveUpdates();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toyota Material Handling - Technology Solutions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #EB0A1E;
+            --secondary-color: #333333;
+            --accent-color: #ff6b4a;
+            --hover-color: #c00919;
+            --light-gray: #f8f9fa;
+            --success-green: #28a745;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light-gray);
+        }
+
+        .logo-container {
+            padding: 2rem 0;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tech-header {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #4a4a4a 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .metric-container {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .feature-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: 100%;
+        }
+
+        .feature-icon {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .sustainability-section {
+            background: linear-gradient(135deg, #45ac5d 0%, #218838 100%);
+            color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+
+        .impact-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            height: 100%;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .tech-pill {
+            background-color: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            display: inline-block;
+        }
+
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #3e8142;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background-color: #3e8142;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background-color: #3e8142;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            margin-left: auto;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex-grow: 1;
+            padding: 8px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background-color: #3e8142;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            padding: 10px 15px;
+            background-color: #e9ecef;
+            border-radius: 15px 15px 15px 0;
+            margin-bottom: 15px;
+            display: none;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #6c757d;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Logo Section -->
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="TMHNA_Logo_RED.png" alt="Toyota Material Handling Logo">
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Driving Innovation Through Technology</h1>
+            <p class="lead">Transforming TMHNA's operations with cutting-edge AI and sustainable solutions</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- NexusAI Section -->
+        <div class="tech-card">
+            <div class="tech-header">
+                <h2>NexusAI Integration</h2>
+                <p>Connecting knowledge, standardizing workflows, and driving operational excellence</p>
+                <div class="metric-container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>90%</h4>
+                            <p>Reduction in document search time</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>30%</h4>
+                            <p>Improvement in task efficiency</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>25%</h4>
+                            <p>Reduction in supply chain disruptions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <img src="Unified Knowledge Sharing System.png" alt="Knowledge Sharing" class="feature-icon">
+                    <h4>Unified Knowledge Sharing</h4>
+                    <p>Centralized operational guidelines and real-time query resolution through Microsoft Teams and SAP Fiori</p>
+                </div>
+                <div class="feature-card">
+                    <img src="Standardized Workflow.png" alt="Workflow Automation" class="feature-icon">
+                    <h4>Standardized Workflow Automation</h4>
+                    <p>RPA-powered task automation and standardized templates for consistent execution</p>
+                </div>
+                <div class="feature-card">
+                    <img src="Real Time Operational Insights System.png" alt="Operational Insights" class="feature-icon">
+                    <h4>Real-Time Operational Insights</h4>
+                    <p>IoT-integrated analytics for proactive risk management and supply chain optimization</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jizoku Kanōsei Section -->
+        <div class="sustainability-section">
+            <div class="container">
+                <h2 class="mb-4">Jizoku Kanōsei: Sustainable Technology</h2>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">20%</div>
+                            <p>Reduction in Energy Consumption</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">25%</div>
+                            <p>Increase in Operational Efficiency</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">15%</div>
+                            <p>Improvement in Cybersecurity Resilience</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="impact-card">
+                            <h4>Sustainable Operations</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">✓ Energy-efficient equipment upgrades</li>
+                                <li class="mb-3">✓ IoT-powered predictive maintenance</li>
+                                <li class="mb-3">✓ AI-driven workflow optimization</li>
+                                <li>✓ Smart facility management systems</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="impact-card">
+                            <h4>Renewable Solutions</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">✓ Solar and wind power integration</li>
+                                <li class="mb-3">✓ Closed-loop logistics systems</li>
+                                <li class="mb-3">✓ Real-time carbon footprint monitoring</li>
+                                <li>✓ Smart energy management technology</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="impact-card">
+                            <h4>Enhanced Security Measures</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">✓ Energy-efficient cloud infrastructure</li>
+                                        <li class="mb-3">✓ AI-powered threat detection</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">✓ Comprehensive data governance</li>
+                                        <li>✓ Continuous security training programs</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatbot-button" onclick="toggleChat()">
+        <i class="fas fa-robot chatbot-icon"></i>
+    </div>
+    
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Nexas AI Assistant</span>
+            </div>
+            <div class="chatbot-close" onclick="toggleChat()">×</div>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm Nexas AI, your Toyota Material Handling assistant. How can I help you today?
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your message..." id="userInput" onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+                    <h5>About Toyota Material Handling</h5>
+                    <p>Leading the way in material handling excellence and innovation.</p>
+                </div>
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="/" class="text-white text-decoration-none mx-2">Home</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Contact</a>
+                        <a href="#" class="text-white text-decoration-none mx-2">Support</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@toyotamh.com<br>Phone: 1-800-000-0000</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let isChatOpen = false;
+
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            isChatOpen = !isChatOpen;
+            chatbot.style.display = isChatOpen ? 'flex' : 'none';
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'block';
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'none';
+        }
+
+        function addMessage(message, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.insertBefore(messageDiv, document.getElementById('typingIndicator'));
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                showTypingIndicator();
+
+                // Simulate bot response
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage('Thank you for your message. As a demo chatbot, I can acknowledge your input but cannot process real requests. In a live version, I would provide relevant assistance for Toyota Material Handling services.');
+                }, 1500);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
